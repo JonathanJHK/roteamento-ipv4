@@ -1,41 +1,63 @@
 import java.io.*;
 import java.net.*;
- 
+
 class UDPClient {
+	static String address;
+	static String destiny;
+	static String router;
+	static int port;
+	static String message;
 	public static void main(String args[]) throws Exception {
- 
+		input(args);
 		BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
- 
+
 		DatagramSocket clientSocket = new DatagramSocket();
- 
-		String servidor = "localhost";
-		int porta = 9876;
- 
+
+		//String servidor = "localhost";
+		//int porta = 9876;
+		String servidor = router;
+		int porta = port;
+
 		InetAddress IPAddress = InetAddress.getByName(servidor);
- 
+
 		byte[] sendData = new byte[1024];
 		byte[] receiveData = new byte[1024];
- 
+
 		System.out.println("Digite o texto a ser enviado ao servidor: ");
 		String sentence = inFromUser.readLine();
 		sendData = sentence.getBytes();
 		DatagramPacket sendPacket = new DatagramPacket(sendData,
-				sendData.length, IPAddress, porta);
- 
-		System.out
-				.println("Enviando pacote UDP para " + servidor + ":" + porta);
+						sendData.length, IPAddress, porta);
+
+		System.out.println("Enviando pacote UDP para " + servidor + ":" + porta);
 		clientSocket.send(sendPacket);
- 
+
 		DatagramPacket receivePacket = new DatagramPacket(receiveData,
-				receiveData.length);
- 
+						receiveData.length);
+
 		clientSocket.receive(receivePacket);
 		System.out.println("Pacote UDP recebido...");
- 
+
 		String modifiedSentence = new String(receivePacket.getData());
- 
+
 		System.out.println("Texto recebido do servidor:" + modifiedSentence);
 		clientSocket.close();
 		System.out.println("Socket cliente fechado!");
-	}
+    }
+
+    static void input(String[] array)
+    {
+		//if(array.length < 5) version full
+		if(array.length == 0)
+		{
+				System.out
+						.println("Obrigatorio, argumento\n exemplo: (ex) java UDPClient.java  127.0.0.1  12345  10.0.0.5   1.2.3.4  Hello");
+				System.exit(0);
+		}		
+		router = array[0];
+		port = Integer.parseInt(array[1]);
+		//address = array[2];
+		//destiny = array[3];
+		//message = array[4];
+    }	
 }
