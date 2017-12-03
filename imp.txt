@@ -1,0 +1,71 @@
+(X)  Feito
+(-)  Parcialmente feito
+(--) Não feito
+(ex) Exemplo
+(info) Informações importantes
+
+-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------
+
+
+Dois  programas devem ser desenvolvidos: 
+
+    (X) um emissor (UDPClient.java), para envio de mensagens na rede;
+    (-) e um programa  “roteador”  que  realiza  o  encaminhamento  e  das  mensagens  recebidas (UDPServer.java).  
+
+    (info) Por simplicidade este último também fará o papel do destinatário, exibindo a
+    mensagem recebida quando for o caso. Serão inicializados vários programas  roteadores e emissores. 
+    (Obs: caso use Java com múltiplas janelas na interface gráfica, pode-se fazer  apenas 1 programa).   
+
+    Cada  mensagem   será enviada  a  algum  roteador,  que  a repassa  para o  próximo roteador,
+    e assim sucessivamente até ser entregue ao destinatário (Cliente). 
+
+-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------
+
+                        Emissor (UDPClient):
+ 
+    (--) O programa emissor recebe como argumentos o número IP e porta do roteador; 
+    
+    (--) dois endereços IP (origem e destino) e uma mensagem.  
+    
+Com essas informações:  
+
+        (--) cria um pacote tipo IP, como os endereços IPs de origem e destino e com payload preenchido com a mensagem.
+
+        (info) Esse pacote é então encaminhado  para o  IP e porta UDP fornecidos. 
+        Ou seja, você está enviando um pacote IPv4  sobre UDP para o seu programa “roteador” que será descrito a seguir. 
+
+        (ex) java UDPClient.java  127.0.0.1  12345  10.0.0.5   1.2.3.4  Hello
+            
+            cria  um  pacote  IP    com  endereço  de  origem  10.0.0.5   e  o  endereço  destino 1.2.3.4 
+            e conteúdo  Hello . Ele envia o pacote para o roteador  local (127.0.0.1) 
+            e a porta UDP 12345. Você pode implementar todos os argumentos na linha 
+            de comando, ou  ir solicitando cada um separadamente  durante  a  execuação  
+            (por  exemplo,  para  enviar  várias  mensagens  durante  a mesma execução).  
+
+-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------
+
+
+                        Roteador (UDPServer):
+
+    O roteador recebe como parâmetro a porta em que irá executar.  
+    Ao receber um pacote, o roteador avalia o endereço de destino 
+    e verifica a ação a ser tomada:  
+        (--) (i)  repassar a mensagem a um próximo roteador (roteamento indireto), ou 
+        (--) (ii) entregá-la ao destino (roteamento direto).     
+
+
+-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------
+
+
+/* Tem que ser melhor especificado essa tabela depois! */
+Tabela IP:
+
+    (--) Você deve implementar um tipo de tabela de 
+    encaminhamento IP para encontrar um roteador 
+    ou host para o qual o pacote deve ser repassado. 
+    Essa busca é usada como parte do processo de 
+    encaminhamento.      
