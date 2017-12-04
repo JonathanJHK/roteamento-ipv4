@@ -49,11 +49,17 @@ Com essas informações:
 
         (ex) java UDPClient.java  127.0.0.1  12345  10.0.0.5   1.2.3.4  Hello
             
-            cria  um  pacote  IP    com  endereço  de  origem  10.0.0.5   e  o  endereço  destino 1.2.3.4 
+            (-) cria  um  pacote  IP    com  endereço  de  origem  10.0.0.5   e  o  endereço  destino 1.2.3.4 
             e conteúdo  Hello . Ele envia o pacote para o roteador  local (127.0.0.1) 
             e a porta UDP 12345. Você pode implementar todos os argumentos na linha 
             de comando, ou  ir solicitando cada um separadamente  durante  a  execuação  
             (por  exemplo,  para  enviar  várias  mensagens  durante  a mesma execução).  
+
+            Pacote a ser criado deve conter: 
+                endereço roteador e porta,
+                endereço do cliente,
+                endereço do destino e
+                mensagem. 
 
 -------------------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------

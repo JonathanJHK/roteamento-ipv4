@@ -1,12 +1,13 @@
 import java.io.*;
 import java.net.*;
+import java.util.*;
 
 class UDPClient {
 	static String address;
 	static String destiny;
 	static String router;
-	static int port;
 	static String message;
+	static String port;
 	public static void main(String args[]) throws Exception {
 		input(args);
 		BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
@@ -16,7 +17,7 @@ class UDPClient {
 		//String servidor = "localhost";
 		//int porta = 9876;
 		String servidor = router;
-		int porta = port;
+		int porta = Integer.parseInt(port);
 
 		InetAddress IPAddress = InetAddress.getByName(servidor);
 
@@ -24,8 +25,12 @@ class UDPClient {
 		byte[] receiveData = new byte[1024];
 
 		System.out.println("Digite o texto a ser enviado ao servidor: ");
-		String sentence = inFromUser.readLine();
+		//String sentence = inFromUser.readLine();
+		//DatagramPacket receivePacket = seedPackge(message.getBytes(), receiveData);
+		
+		String sentence = message;
 		sendData = sentence.getBytes();
+		
 		DatagramPacket sendPacket = new DatagramPacket(sendData,
 						sendData.length, IPAddress, porta);
 
@@ -34,7 +39,7 @@ class UDPClient {
 
 		DatagramPacket receivePacket = new DatagramPacket(receiveData,
 						receiveData.length);
-
+		
 		clientSocket.receive(receivePacket);
 		System.out.println("Pacote UDP recebido...");
 
@@ -43,8 +48,20 @@ class UDPClient {
 		System.out.println("Texto recebido do servidor:" + modifiedSentence);
 		clientSocket.close();
 		System.out.println("Socket cliente fechado!");
-    }
+	}
+	/*
+	static DatagramPacket seedPackge(byte[] sendData, byte[] receiveData)
+	{
+		DatagramPacket sendPacket = new DatagramPacket(sendData,
+						sendData.length, IPAddress, port);
 
+		System.out.println("Enviando pacote UDP para " + router + ":" + port);
+		clientSocket.send(sendPacket);
+
+		DatagramPacket receivePacket = new DatagramPacket(receiveData,
+						receiveData.length);
+	}
+	*/
     static void input(String[] array)
     {
 		//if(array.length < 5) version full
@@ -55,9 +72,9 @@ class UDPClient {
 				System.exit(0);
 		}		
 		router = array[0];
-		port = Integer.parseInt(array[1]);
-		//address = array[2];
-		//destiny = array[3];
-		//message = array[4];
+		port = array[1];
+		address = array[2];
+		destiny = array[3];
+		message = array[4];
     }	
 }

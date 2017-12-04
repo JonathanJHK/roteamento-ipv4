@@ -2,11 +2,14 @@ import java.io.*;
 import java.net.*;
  
 class UDPServer {
+	static int port;
+	static int numConn;
 	public static void main(String args[]) throws Exception {
- 
-		int porta = 9876;
-		int numConn = 1;
-		
+		input(args);
+		//int porta = 9876;
+		int porta = port;
+		numConn = 1;
+				
 		DatagramSocket serverSocket = new DatagramSocket(porta);
  
 		byte[] receiveData = new byte[1024];
@@ -40,5 +43,17 @@ class UDPServer {
 			System.out.println("OK\n");
 		}
 		//serverSocket.close();
+	}
+
+	static void input(String[] array)
+	{
+		if(array.length == 0)
+		{
+			System.out
+					.println("Obrigatorio, argumento\n exemplo: (ex) java UDPServer.java 12345");
+			System.exit(0);
+		}		
+
+		port = Integer.parseInt(array[0]);
 	}
 }
