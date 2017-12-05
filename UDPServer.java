@@ -9,9 +9,11 @@ class UDPServer {
 		//int porta = 9876;
 		int porta = port;
 		numConn = 1;
-				
+
+		String sentence;	
+		
 		DatagramSocket serverSocket = new DatagramSocket(porta);
- 
+ 		
 		byte[] receiveData = new byte[1024];
 		byte[] sendData = new byte[1024];
  
@@ -20,11 +22,29 @@ class UDPServer {
 			DatagramPacket receivePacket = new DatagramPacket(receiveData,
 					receiveData.length);
 			System.out.println("Esperando por datagrama UDP na porta " + porta);
+
+
 			serverSocket.receive(receivePacket);
-			System.out.print("Datagrama UDP [" + numConn + "] recebido...");
+			System.out.print("Datagrama UDP messagem [" + numConn + "] recebido...");
  
-			String sentence = new String(receivePacket.getData());
+			sentence = new String(receivePacket.getData());
 			System.out.println(sentence);
+
+			serverSocket.receive(receivePacket);
+			System.out.print("Datagrama UDP address [" + numConn + "] recebido...");
+ 
+			sentence = new String(receivePacket.getData());
+			System.out.println(sentence);
+
+
+			serverSocket.receive(receivePacket);
+			System.out.print("Datagrama UDP destiny [" + numConn + "] recebido...");
+ 
+			sentence = new String(receivePacket.getData());
+			System.out.println(sentence);
+
+
+
 			
 			InetAddress IPAddress = receivePacket.getAddress();
  
@@ -43,6 +63,12 @@ class UDPServer {
 			System.out.println("OK\n");
 		}
 		//serverSocket.close();
+	}
+
+	/* Busca na tabela e destinação */
+	static void table()
+	{
+		return void;
 	}
 
 	static void input(String[] array)

@@ -5,14 +5,16 @@ import java.util.*;
 class UDPClient {
 	static String address;
 	static String destiny;
-	static String router;
+	static String router = "localhost";
 	static String message;
 	static String port;
+	static DatagramSocket clientSocket;
 	public static void main(String args[]) throws Exception {
 		input(args);
 		BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
 
-		DatagramSocket clientSocket = new DatagramSocket();
+		
+		clientSocket = new DatagramSocket();
 
 		//String servidor = "localhost";
 		//int porta = 9876;
@@ -28,14 +30,14 @@ class UDPClient {
 		//String sentence = inFromUser.readLine();
 		//DatagramPacket receivePacket = seedPackge(message.getBytes(), receiveData);
 		
-		String sentence = message;
-		sendData = sentence.getBytes();
-		
-		DatagramPacket sendPacket = new DatagramPacket(sendData,
-						sendData.length, IPAddress, porta);
+		/* Envio de pacote */
 
-		System.out.println("Enviando pacote UDP para " + servidor + ":" + porta);
-		clientSocket.send(sendPacket);
+		seed(message.getBytes());
+		seed(address.getBytes());
+		seed(destiny.getBytes());
+		
+
+		/* ----- fim ----- */
 
 		DatagramPacket receivePacket = new DatagramPacket(receiveData,
 						receiveData.length);
@@ -49,19 +51,16 @@ class UDPClient {
 		clientSocket.close();
 		System.out.println("Socket cliente fechado!");
 	}
-	/*
-	static DatagramPacket seedPackge(byte[] sendData, byte[] receiveData)
+	
+	static void seed(byte[] sendData) throws IOException
 	{
 		DatagramPacket sendPacket = new DatagramPacket(sendData,
-						sendData.length, IPAddress, port);
+						sendData.length, InetAddress.getByName(router), Integer.parseInt(port));
 
 		System.out.println("Enviando pacote UDP para " + router + ":" + port);
 		clientSocket.send(sendPacket);
-
-		DatagramPacket receivePacket = new DatagramPacket(receiveData,
-						receiveData.length);
 	}
-	*/
+	
     static void input(String[] array)
     {
 		//if(array.length < 5) version full
