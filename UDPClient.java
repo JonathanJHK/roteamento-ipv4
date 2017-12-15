@@ -52,8 +52,7 @@ class UDPClient {
 		System.out.println("Socket cliente fechado!");
 	}
 	
-	static void seed(byte[] sendData) throws IOException
-	{
+	static void seed(byte[] sendData) throws IOException {
 		DatagramPacket sendPacket = new DatagramPacket(sendData,
 						sendData.length, InetAddress.getByName(router), Integer.parseInt(port));
 
@@ -61,11 +60,9 @@ class UDPClient {
 		clientSocket.send(sendPacket);
 	}
 	
-    static void input(String[] array)
-    {
+    static void input(String[] array) {
 		//if(array.length < 5) version full
-		if(array.length == 0)
-		{
+		if(array.length == 0) {
 				System.out
 						.println("Obrigatorio, argumento\n exemplo: (ex) java UDPClient.java  127.0.0.1  12345  10.0.0.5   1.2.3.4  Hello");
 				System.exit(0);

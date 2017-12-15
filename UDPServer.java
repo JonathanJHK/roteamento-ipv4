@@ -66,20 +66,23 @@ class UDPServer {
 	}
 
 	/* Busca na tabela e destinação */
-	static void table()
-	{
-		return void;
+	static void table() {
+		return;
 	}
 
-	static void input(String[] array)
-	{
-		if(array.length == 0)
-		{
+	static void input(String[] array) {
+		if(array.length == 0) {
 			System.out
 					.println("Obrigatorio, argumento\n exemplo: (ex) java UDPServer.java 12345");
 			System.exit(0);
 		}		
 
 		port = Integer.parseInt(array[0]);
-	}
+
+		new Table(array[1].split("/"));
+		
+		//System.out.exit();
+		//table = new Table(array[1]);
+
+
 }
