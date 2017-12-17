@@ -1,16 +1,34 @@
 
 
 public class Table {
-	String network; 
-	String mask;
-	String gateway;
-	String interface;
+	Route[] route;
+	int index = 0;
 
+	Table (int size) {
+		route = new Route[size];
+	}
 
-	Table (String[] array) {
-		this.network = array[0];
-		this.mask = array[1];
-		this.gateway = array[2];
-		this.interface = array[3];
+	public void add (String[] array) {
+		if(array.length == 1)
+			return;
+
+		route[index++] = new Route(array);
+	}
+
+	public Route route (String ip) {
+		Route choice = route[0];
+
+		for (Route value : route)
+			if((Integer.parseInt(value.network) & Integer.parseInt(value.mask)) == (Integer.parseInt(ip) & Integer.parseInt(value.mask)))
+				choice = choose(value, choice);
+		
+		return choice;
+	} 
+
+	private Route choose (Route value, Route choice) {
+		if(Integer.parseInt(value.mask) > Integer.parseInt(choice.mask))
+			return value;
+
+		return choice;
 	}
 }

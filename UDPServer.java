@@ -4,6 +4,7 @@ import java.net.*;
 class UDPServer {
 	static int port;
 	static int numConn;
+	static Table table;
 	public static void main(String args[]) throws Exception {
 		input(args);
 		//int porta = 9876;
@@ -43,7 +44,7 @@ class UDPServer {
 			sentence = new String(receivePacket.getData());
 			System.out.println(sentence);
 
-
+			
 
 			
 			InetAddress IPAddress = receivePacket.getAddress();
@@ -78,11 +79,14 @@ class UDPServer {
 		}		
 
 		port = Integer.parseInt(array[0]);
+		
+		table = new Table(array.length - 1);
 
-		new Table(array[1].split("/"));
+		for(String value : array)
+			table.add(value.split("/"));
+		
 		
 		//System.out.exit();
 		//table = new Table(array[1]);
-
-
+	}
 }
