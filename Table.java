@@ -16,7 +16,7 @@ public class Table {
 	}
 
 	public Route route (String ip) {
-		Route choice = route[0];
+		Route choice = new Route("default");
 
 		for (Route value : route)
 			if((Integer.parseInt(value.network) & Integer.parseInt(value.mask)) == (Integer.parseInt(ip) & Integer.parseInt(value.mask)))
@@ -26,6 +26,9 @@ public class Table {
 	} 
 
 	private Route choose (Route value, Route choice) {
+		if(choice.network.equals("default"))
+			return value;
+			
 		if(Integer.parseInt(value.mask) > Integer.parseInt(choice.mask))
 			return value;
 

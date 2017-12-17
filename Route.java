@@ -6,6 +6,9 @@ public class Route {
 	String gateway;
 	String intface;
 
+	Route (String network) {
+		this.network = network;
+	}
 
 	Route (String[] array) {
 		this.network = array[0];
