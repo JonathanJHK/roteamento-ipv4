@@ -2,12 +2,7 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-class SendPackage {
-	static String address;
-	static String destiny;
-	static String router = "localhost";
-	static String message;
-	static String port;
+class SendPackage extends Package {
     static DatagramSocket clientSocket;
     static BufferedReader inFromUser;
     static byte[] sendData;
