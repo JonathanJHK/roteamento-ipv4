@@ -6,7 +6,7 @@ class UDPClient extends SendPackage {
 	public static void main(String args[]) throws Exception {
 		input(args);
 		preparing();
-	
+		
 		seed(message.getBytes());
 		seed(address.getBytes());
 		seed(destiny.getBytes());
@@ -14,13 +14,13 @@ class UDPClient extends SendPackage {
 		DatagramPacket receivePacket = new DatagramPacket(receiveData,
 						receiveData.length);
 		
-		clientSocket.receive(receivePacket);
+		socket.receive(receivePacket);
 		System.out.println("Pacote UDP recebido...");
 
 		String modifiedSentence = new String(receivePacket.getData());
 
 		System.out.println("Texto recebido do servidor:" + modifiedSentence);
-		clientSocket.close();
+		socket.close();
 		System.out.println("Socket cliente fechado!");
 	}
 	

@@ -1,7 +1,7 @@
 import java.io.*;
 import java.net.*;
  
-class UDPServer {
+class UDPServer extends SendPackage {
 	static int port;
 	static int numConn;
 	static Table table;
@@ -13,11 +13,8 @@ class UDPServer {
 
 		String sentence;	
 		
-		DatagramSocket serverSocket = new DatagramSocket(porta);
+		socket = new DatagramSocket(porta);
  		
-		byte[] receiveData = new byte[1024];
-		byte[] sendData = new byte[1024];
- 
 		while (true) {
  
 			DatagramPacket receivePacket = new DatagramPacket(receiveData,
@@ -25,20 +22,20 @@ class UDPServer {
 			System.out.println("Esperando por datagrama UDP na porta " + porta);
 
 
-			serverSocket.receive(receivePacket);
+			socket.receive(receivePacket);
 			System.out.print("Datagrama UDP messagem [" + numConn + "] recebido...");
  
 			sentence = new String(receivePacket.getData());
 			System.out.println(sentence);
 
-			serverSocket.receive(receivePacket);
+			socket.receive(receivePacket);
 			System.out.print("Datagrama UDP address [" + numConn + "] recebido...");
  
 			sentence = new String(receivePacket.getData());
 			System.out.println(sentence);
 
 
-			serverSocket.receive(receivePacket);
+			socket.receive(receivePacket);
 			System.out.print("Datagrama UDP destiny [" + numConn + "] recebido...");
  
 			sentence = new String(receivePacket.getData());
@@ -47,9 +44,9 @@ class UDPServer {
 			
 
 			
-			InetAddress IPAddress = receivePacket.getAddress();
+			IPAddress = receivePacket.getAddress();
  
-			int port = receivePacket.getPort();
+			port = receivePacket.getPort();
  
 			String capitalizedSentence = sentence.toUpperCase();
  
@@ -60,13 +57,13 @@ class UDPServer {
 			
 			System.out.print("Enviando " + capitalizedSentence + "...");
  
-			serverSocket.send(sendPacket);
+			socket.send(sendPacket);
 			System.out.println("OK\n");
 		}
-		//serverSocket.close();
+		//socket.close();
 	}
 
-	/* Busca na tabela e destinação */
+	/* Busca na tabela e destino */
 	static void table() {
 		return;
 	}
