@@ -7,9 +7,9 @@ class UDPClient extends SendPackage {
 		input(args);
 		preparing();
 		
-		seed(message.getBytes());
-		seed(address.getBytes());
-		seed(destiny.getBytes());
+		forwarding(message.getBytes());
+		forwarding(address.getBytes());
+		forwarding(destiny.getBytes());
 		
 		DatagramPacket receivePacket = new DatagramPacket(receiveData,
 						receiveData.length);

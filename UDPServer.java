@@ -3,64 +3,61 @@ import java.net.*;
  
 class UDPServer extends SendPackage {
 	static int port;
-	static int numConn;
 	static Table table;
+	static DatagramPacket receivePacket;
 	public static void main(String args[]) throws Exception {
 		input(args);
 		//int porta = 9876;
-		int porta = port;
-		numConn = 1;
 
-		String sentence;	
-		
-		socket = new DatagramSocket(porta);
- 		
-		while (true) {
- 
-			DatagramPacket receivePacket = new DatagramPacket(receiveData,
-					receiveData.length);
-			System.out.println("Esperando por datagrama UDP na porta " + porta);
+		socket = new DatagramSocket(port); 		
+		started();
+	}
 
-
-			socket.receive(receivePacket);
-			System.out.print("Datagrama UDP messagem [" + numConn + "] recebido...");
- 
-			sentence = new String(receivePacket.getData());
-			System.out.println(sentence);
-
-			socket.receive(receivePacket);
-			System.out.print("Datagrama UDP address [" + numConn + "] recebido...");
- 
-			sentence = new String(receivePacket.getData());
-			System.out.println(sentence);
-
-
-			socket.receive(receivePacket);
-			System.out.print("Datagrama UDP destiny [" + numConn + "] recebido...");
- 
-			sentence = new String(receivePacket.getData());
-			System.out.println(sentence);
-
+	static void started () throws IOException {
+		while (true) { 
+			receivePacket = new DatagramPacket(receiveData, receiveData.length);
+			System.out.println("Esperando por datagrama UDP na porta " + port);
+			receiving();
 			
-
-			
-			IPAddress = receivePacket.getAddress();
- 
-			port = receivePacket.getPort();
- 
-			String capitalizedSentence = sentence.toUpperCase();
- 
-			sendData = capitalizedSentence.getBytes();
- 
-			DatagramPacket sendPacket = new DatagramPacket(sendData,
-					sendData.length, IPAddress, port);
-			
-			System.out.print("Enviando " + capitalizedSentence + "...");
- 
-			socket.send(sendPacket);
-			System.out.println("OK\n");
+			resend();
 		}
-		//socket.close();
+	}
+
+	static void resend () throws IOException {
+		IPAddress = receivePacket.getAddress();
+ 
+		String capitalizedSentence = message.toUpperCase();
+
+		sendData = capitalizedSentence.getBytes();
+
+		DatagramPacket sendPacket = new DatagramPacket(sendData,
+				sendData.length, IPAddress, receivePacket.getPort());
+		
+		System.out.print("Enviando " + capitalizedSentence + "...");
+
+		socket.send(sendPacket);
+		System.out.println("OK\n");
+	}
+
+	static void receiving () throws IOException {
+		socket.receive(receivePacket);
+		System.out.print("Datagrama UDP messagem  recebido...");
+
+		message = new String(receivePacket.getData());
+		System.out.println(message);
+
+		socket.receive(receivePacket);
+		System.out.print("Datagrama UDP address  recebido...");
+
+		address = new String(receivePacket.getData());
+		System.out.println(address);
+
+
+		socket.receive(receivePacket);
+		System.out.print("Datagrama UDP destiny  recebido...");
+
+		destiny = new String(receivePacket.getData());
+		System.out.println(destiny);
 	}
 
 	/* Busca na tabela e destino */
@@ -68,7 +65,7 @@ class UDPServer extends SendPackage {
 		return;
 	}
 
-	static void input(String[] array) {
+	static void input (String[] array) {
 		if(array.length == 0) {
 			System.out
 					.println("Obrigatorio, argumento\n exemplo: (ex) java UDPServer.java 12345");

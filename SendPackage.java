@@ -14,11 +14,11 @@ class SendPackage extends Package {
 		IPAddress = InetAddress.getByName(router);
     }
 	
-	static void seed (byte[] sendData) throws IOException {
+	static void forwarding (byte[] sendData) throws IOException {
 		DatagramPacket sendPacket = new DatagramPacket(sendData,
 						sendData.length, InetAddress.getByName(router), Integer.parseInt(port));
 
 		System.out.println("Enviando pacote UDP para " + router + ":" + port);
 		socket.send(sendPacket);
-	}	
+	}
 }
