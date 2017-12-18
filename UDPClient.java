@@ -1,8 +1,14 @@
+/*
+*	Classe que representa o cliente ou emissor
+*   essa classe herda de SendPackage
+*/
 import java.io.*;
 import java.net.*;
 import java.util.*;
-
 class UDPClient extends SendPackage {
+	/* Método principal 
+	*  Faz a comunicação com o roteador, enviando um pacote	
+	*/
 	public static void main(String args[]) throws Exception {
 		input(args);
 		preparing();
@@ -24,7 +30,9 @@ class UDPClient extends SendPackage {
 		System.out.println("Socket cliente fechado!");
 	}
 	
-	
+	/* 
+	*	Método input, responsavel por trata do recebimento dos dados pelo terminal	
+	*/
     static void input(String[] array) {
 		if(array.length == 0) {
 				System.out

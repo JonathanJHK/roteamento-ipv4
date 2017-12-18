@@ -1,13 +1,21 @@
-
+/*
+*	Classe que representa a tabela
+*/
 
 public class Table {
 	Route[] route;
 	int index = 0;
 
+	/*
+	*	Método construtor
+	*/
 	Table (int size) {
 		route = new Route[size];
 	}
 
+	/*
+	*	Método add, adiciona uma nova rota na tabela
+	*/
 	public void add (String[] array) {
 		if(array.length == 1)
 			return;
@@ -16,6 +24,9 @@ public class Table {
 		index = index + 1;
 	}
 
+	/*
+	*	Método route, responsavel por decidir o roteamento
+	*/
 	public Route route (String ip) {
 		Route choice = new Route("default");
 
@@ -25,8 +36,11 @@ public class Table {
 			//ip = ip.replace(".", "");
 			//ip = ip.replace(" ", "");
 			//System.out.println("------------- > " + ip.length());
-			
-			if((Integer.parseInt(value.network.replace(".", "")) & Integer.parseInt(value.mask.replace(".", ""))) == (Integer.parseInt(ip.replace(".", "")) & Integer.parseInt(value.mask.replace(".", ""))))
+			//System.out.println("------------ > " + Long.parseLong(value.mask.replace(".", "")) );
+			//System.out.println("------------ > " + Long.parseLong(ip.replace(".", "")) );
+			System.out.println();
+			System.out.println((Long.parseLong(value.network.replace(".", "")) & Long.parseLong(value.mask.replace(".", ""))) + "--------------" + (Long.parseLong(ip.replace(".", "")) & Long.parseLong(value.mask.replace(".", ""))));
+			if((Long.parseLong(value.network.replace(".", "")) & Long.parseLong(value.mask.replace(".", ""))) == (Long.parseLong(ip.replace(".", "")) & Long.parseLong(value.mask.replace(".", ""))))
 				choice = choose(value, choice);
 		}
 			
@@ -34,11 +48,15 @@ public class Table {
 		return choice;
 	} 
 
+	/*
+	*	Método choose, define a plioridade entre rotas, como destino.
+	*/
 	private Route choose (Route value, Route choice) {
+		System.out.println(value.network);
 		if(choice.network.equals("default"))
 			return value;
 			
-		if(Integer.parseInt(value.mask) > Integer.parseInt(choice.mask))
+		if(Long.parseLong(value.mask) > Long.parseLong(choice.mask))
 			return value;
 
 		return choice;
