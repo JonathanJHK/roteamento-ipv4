@@ -25,6 +25,13 @@ public class Route {
 		this.intface = array[3];
 	}
 	
+	public boolean routeDefault () {
+		if(network.equals("0.0.0.0"))
+			return true;
+
+		return false;
+	}
+
 	private String typeDefinition (Long mask) {
 		if(mask < 40)
 			return cidr (Integer.parseInt(mask + "")); 

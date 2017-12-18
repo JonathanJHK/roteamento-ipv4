@@ -32,7 +32,18 @@ class UDPServer extends SendPackage {
 			System.out.println("---------------------|---------|----------------------|---------|------------------");
 
 			if(route.network.equals("default"))
-				System.out.println("destination " + destiny + " not found in routing table, dropping packet ");
+			{
+				if (table.valueDef != null)
+				{
+					System.out.println("forwarding packet for " + destiny + " to next hop " + table.valueDef.network + " over interface " + table.valueDef.intface);
+					
+					reforwarding (message.getBytes(), Integer.parseInt(table.valueDef.intface));
+					reforwarding (address.getBytes(), Integer.parseInt(table.valueDef.intface));
+					reforwarding (destiny.getBytes(), Integer.parseInt(table.valueDef.intface));
+				}
+				else
+					System.out.println("destination " + destiny + " not found in routing table, dropping packet ");
+			}
 			
 			else {
 				if (route.gateway.equals("0.0.0.0"))

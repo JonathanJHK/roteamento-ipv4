@@ -4,6 +4,7 @@
 
 public class Table {
 	Route[] route;
+	Route valueDef;
 	int index = 0;
 
 	/*
@@ -21,6 +22,9 @@ public class Table {
 			return;
 
 		route[index++] = new Route(array);
+
+		if(route[index - 1].routeDefault())
+			valueDef = route[index - 1];
 	}
 
 	/*
