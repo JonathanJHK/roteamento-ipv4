@@ -26,6 +26,9 @@ public class Route {
 	}
 	
 	private String typeDefinition (Long mask) {
+		if(mask < 40)
+			return cidr (Integer.parseInt(mask + "")); 
+		
 		if (mask > 25525500) {
 			return "C";
 		}
@@ -33,5 +36,21 @@ public class Route {
 			return "B";
 		}
 		return "A";
+	}
+
+	private String cidr (int mask) {
+		switch (mask) {
+			case 8 :
+				iMask = Long.parseLong("255000");
+				return "A";
+
+			case 16 :
+				iMask = Long.parseLong("25525500");
+				return "B";
+
+			default:
+				iMask = Long.parseLong("2552552550");
+				return "A";
+		}
 	}
 }
