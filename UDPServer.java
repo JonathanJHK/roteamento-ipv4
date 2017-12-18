@@ -8,7 +8,6 @@ import java.net.*;
 class UDPServer extends SendPackage {
 	static int port;
 	static Table table;
-	static DatagramPacket receivePacket;
 	/*
 	*	Método principal da classe
 	*
@@ -33,6 +32,15 @@ class UDPServer extends SendPackage {
 			
 			if(route.network.equals("default"))
 				System.out.println("destination " + destiny + " not found in routing table, dropping packet ");
+			
+			else {
+				System.out.println("forwarding packet for " + destiny + " to next hop " + route.network + " over interface " + route.intface);
+				
+				reforwarding (message.getBytes(), Integer.parseInt(route.intface));
+				reforwarding (address.getBytes(), Integer.parseInt(route.intface));
+				reforwarding (destiny.getBytes(), Integer.parseInt(route.intface));
+			}
+				
 			
 			resend();
 		}

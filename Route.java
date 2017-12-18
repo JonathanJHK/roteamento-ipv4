@@ -5,6 +5,7 @@
 public class Route {
 	String network; 
 	String mask;
+	Long iMask;
 	String gateway;
 	String intface;
 	/*
@@ -18,6 +19,7 @@ public class Route {
 	*/
 	Route (String[] array) {
 		this.network = array[0];
+		this.iMask = Long.parseLong(array[1].replace(".", ""));
 		this.mask = typeDefinition(Long.parseLong(array[1].replace(".", "")));
 		this.gateway = array[2];
 		this.intface = array[3];

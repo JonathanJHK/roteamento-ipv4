@@ -31,31 +31,29 @@ public class Table {
 
 		for (Route value : route)
 		{
-			//Integer.parseInt(value.network.replaceAll(".", ""))
-			//ip = ip.replace(".", "");
-			//ip = ip.replace(" ", "");
-			//System.out.println("------------- > " + ip.length());
-			//System.out.println("------------ > " + Long.parseLong(value.mask.replace(".", "")) );
-			//System.out.println("------------ > " + Long.parseLong(ip.replace(".", "")) );
-			/*System.out.println(Long.parseLong(
-				Integer.toBinaryString(
-					Integer.parseInt(
-						value.network.replace(".", "")
-						)
-					)
-				) & 1000);
-			*/
-
-			System.out.println(networkCalculation(ip, value.mask) + " ---- " + value.mask);
-			System.out.println(networkCalculation(value.network, value.mask));
-			//System.out.println((Long.parseLong(value.network.replace(".", "")) & /* Long.parseLong(value.mask.replace(".", ""))*/  1000) + "--------------" + (Long.parseLong(ip.replace(".", "")) & /*Long.parseLong(value.mask.replace(".", ""))*/ 1000 ));
-			/*if((Long.parseLong(value.network.replace(".", "")) & Long.parseLong(value.mask.replace(".", ""))) == (Long.parseLong(ip.replace(".", "")) & Long.parseLong(value.mask.replace(".", ""))))
-				choice = choose(value, choice);*/
+			//System.out.println(networkCalculation(ip, value.mask) + " ---- " + value.mask);
+			//System.out.println(networkCalculation(value.network, value.mask));
+			//System.out.println(networkCalculation(ip, value.mask) == networkCalculation(value.network, value.mask));
+			if(networkCalculation(ip, value.mask).equals(networkCalculation(value.network, value.mask)))
+				choice = choose(value, choice);
 		}
 			
 		
 		return choice;
 	} 
+	
+	/*
+	*	Método choose, define a plioridade entre rotas, como destino.
+	*/
+	private Route choose (Route value, Route choice) {
+		if(choice.network.equals("default"))
+			return value;
+			
+		if(value.iMask > choice.iMask)
+			return value;
+
+		return choice;
+	}
 
 	private String networkCalculation (String ip, String type) {
         String input = "195.156.87.98/20"; // obtido por parametro ou outra coisa qualquer.
@@ -107,19 +105,5 @@ public class Table {
 		decimal[3] = decimal[3] & 0;//Integer.parseInt(firstParse[1]);// se nao te esueceste na segunda posicao do vector estava a MASK
 		*/
 		return decimal[0] + "" + decimal[1] + "" + decimal[2] + "" + decimal[3];
-	}
-
-	/*
-	*	Método choose, define a plioridade entre rotas, como destino.
-	*/
-	private Route choose (Route value, Route choice) {
-		System.out.println(value.network);
-		if(choice.network.equals("default"))
-			return value;
-			
-		if(Long.parseLong(value.mask) > Long.parseLong(choice.mask))
-			return value;
-
-		return choice;
 	}
 }
