@@ -18,8 +18,18 @@ public class Route {
 	*/
 	Route (String[] array) {
 		this.network = array[0];
-		this.mask = array[1];
+		this.mask = typeDefinition(Long.parseLong(array[1].replace(".", "")));
 		this.gateway = array[2];
 		this.intface = array[3];
-    }
+	}
+	
+	private String typeDefinition (Long mask) {
+		if (mask > 25525500) {
+			return "C";
+		}
+		else if(mask > 25500000) {
+			return "B";
+		}
+		return "A";
+	}
 }
