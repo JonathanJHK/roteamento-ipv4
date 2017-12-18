@@ -12,15 +12,24 @@ public class Table {
 		if(array.length == 1)
 			return;
 
-		route[index++] = new Route(array);
+		route[index] = new Route(array);
+		index = index + 1;
 	}
 
 	public Route route (String ip) {
 		Route choice = new Route("default");
 
 		for (Route value : route)
-			if((Integer.parseInt(value.network) & Integer.parseInt(value.mask)) == (Integer.parseInt(ip) & Integer.parseInt(value.mask)))
+		{
+			//Integer.parseInt(value.network.replaceAll(".", ""))
+			//ip = ip.replace(".", "");
+			//ip = ip.replace(" ", "");
+			//System.out.println("------------- > " + ip.length());
+			
+			if((Integer.parseInt(value.network.replace(".", "")) & Integer.parseInt(value.mask.replace(".", ""))) == (Integer.parseInt(ip.replace(".", "")) & Integer.parseInt(value.mask.replace(".", ""))))
 				choice = choose(value, choice);
+		}
+			
 		
 		return choice;
 	} 

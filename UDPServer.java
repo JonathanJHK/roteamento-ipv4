@@ -19,8 +19,23 @@ class UDPServer extends SendPackage {
 			System.out.println("Esperando por datagrama UDP na porta " + port);
 			receiving();
 			
+			Route route = table.route(change(destiny));
+			
+			if(route.network.equals("default"))
+				System.out.println("destination " + destiny + " not found in routing table, dropping packet ");
+			
 			resend();
 		}
+	}
+
+	static String change (String value) {
+		String other = "";
+		
+		for (int i=0, size = value.length(); i != size; i++) {
+			if((int) value.charAt(i) > 45 && (int) value.charAt(i) < 58)
+				other += value.charAt(i);	
+		}
+		return other;
 	}
 
 	static void resend () throws IOException {
@@ -51,7 +66,6 @@ class UDPServer extends SendPackage {
 
 		address = new String(receivePacket.getData());
 		System.out.println(address);
-
 
 		socket.receive(receivePacket);
 		System.out.print("Datagrama UDP destiny  recebido...");
