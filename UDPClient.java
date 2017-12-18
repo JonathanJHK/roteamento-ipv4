@@ -20,12 +20,9 @@ class UDPClient extends SendPackage {
 		DatagramPacket receivePacket = new DatagramPacket(receiveData,
 						receiveData.length);
 		
-		socket.receive(receivePacket);
-		System.out.println("Pacote UDP recebido...");
-
+		socket.receive(receivePacket);		
 		String modifiedSentence = new String(receivePacket.getData());
 
-		System.out.println("Texto recebido do servidor:" + modifiedSentence);
 		socket.close();
 		System.out.println("Socket cliente fechado!");
 	}

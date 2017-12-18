@@ -41,7 +41,7 @@ class SendPackage extends Package {
 		DatagramPacket sendPacket = new DatagramPacket(sendData,
 				sendData.length, IPAddress, port);
 		
-		System.out.print("Enviando " + capitalizedSentence + "...");
+		//System.out.print("Enviando " + capitalizedSentence + "...");
 
 		socket.send(sendPacket);
 	}

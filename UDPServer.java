@@ -29,19 +29,25 @@ class UDPServer extends SendPackage {
 			receiving();
 			
 			Route route = table.route(change(destiny));
-			
+			System.out.println("---------------------|---------|----------------------|---------|------------------");
+
 			if(route.network.equals("default"))
 				System.out.println("destination " + destiny + " not found in routing table, dropping packet ");
 			
 			else {
-				System.out.println("forwarding packet for " + destiny + " to next hop " + route.network + " over interface " + route.intface);
-				
-				reforwarding (message.getBytes(), Integer.parseInt(route.intface));
-				reforwarding (address.getBytes(), Integer.parseInt(route.intface));
-				reforwarding (destiny.getBytes(), Integer.parseInt(route.intface));
-			}
-				
+				if (route.gateway.equals("0.0.0.0"))
+					System.out.println("destination reached. From " + address + " to " + destiny + " : " + message); 
 			
+				else {
+					System.out.println("forwarding packet for " + destiny + " to next hop " + route.network + " over interface " + route.intface);
+					
+					reforwarding (message.getBytes(), Integer.parseInt(route.intface));
+					reforwarding (address.getBytes(), Integer.parseInt(route.intface));
+					reforwarding (destiny.getBytes(), Integer.parseInt(route.intface));
+				}
+				
+			}
+			System.out.println("---------------------|---------|----------------------|---------|------------------");
 			resend();
 		}
 	}
@@ -72,17 +78,14 @@ class UDPServer extends SendPackage {
 	static void resend () throws IOException {
 		IPAddress = receivePacket.getAddress();
  
-		String capitalizedSentence = message.toUpperCase();
+		String capitalizedSentence = "close conection";
 
 		sendData = capitalizedSentence.getBytes();
 
 		DatagramPacket sendPacket = new DatagramPacket(sendData,
 				sendData.length, IPAddress, receivePacket.getPort());
-		
-		System.out.print("Enviando " + capitalizedSentence + "...");
 
 		socket.send(sendPacket);
-		System.out.println("OK\n");
 	}
 
 	/*
@@ -90,22 +93,22 @@ class UDPServer extends SendPackage {
 	*/
 	static void receiving () throws IOException {
 		socket.receive(receivePacket);
-		System.out.print("Datagrama UDP messagem  recebido...");
+		//System.out.print("Datagrama UDP messagem  recebido...");
 
 		message = new String(receivePacket.getData());
-		System.out.println(message);
+		//System.out.println(message);
 
 		socket.receive(receivePacket);
-		System.out.print("Datagrama UDP address  recebido...");
+		//System.out.print("Datagrama UDP address  recebido...");
 
 		address = new String(receivePacket.getData());
-		System.out.println(address);
+		//System.out.println(address);
 
 		socket.receive(receivePacket);
-		System.out.print("Datagrama UDP destiny  recebido...");
+		//System.out.print("Datagrama UDP destiny  recebido...");
 
 		destiny = new String(receivePacket.getData());
-		System.out.println(destiny);
+		//System.out.println(destiny);
 	}
 
 	/* Busca na tabela e destino */
