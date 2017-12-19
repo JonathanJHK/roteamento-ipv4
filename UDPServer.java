@@ -122,10 +122,7 @@ class UDPServer extends SendPackage {
 		//System.out.println(destiny);
 	}
 
-	/* Busca na tabela e destino */
-	static void table() {
-		return;
-	}
+	
 
 	/* 
 	*	Método input, responsavel por trata do recebimento dos dados pelo terminal	

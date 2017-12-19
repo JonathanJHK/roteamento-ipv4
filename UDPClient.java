@@ -40,6 +40,8 @@ class UDPClient extends SendPackage {
 		port = array[1];
 		address = array[2];
 		destiny = array[3];
-		message = array[4];
+		message = "";
+		for (int i=4; i != array.length; i++)
+			message += array[i] + " ";
     }	
 }

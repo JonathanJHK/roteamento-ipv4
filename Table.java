@@ -47,7 +47,7 @@ public class Table {
 	} 
 	
 	/*
-	*	Método choose, define a plioridade entre rotas, como destino.
+	*	Método choose, define a prioridade entre rotas, como destino.
 	*/
 	private Route choose (Route value, Route choice) {
 		if(choice.network.equals("default"))
@@ -60,7 +60,6 @@ public class Table {
 	}
 
 	private String networkCalculation (String ip, String type) {
-        String input = "195.156.87.98/20"; // obtido por parametro ou outra coisa qualquer.
         input = ip;
         /*A "\" é um caracter especial de Strings e de expressoes regulares, 
             se nao me engano sao mesmo precisas as 4 barras. 
