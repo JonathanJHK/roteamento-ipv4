@@ -59,8 +59,8 @@ public class Table {
 		return choice;
 	}
 
-	private String networkCalculation (String ip, String type) {
-        input = ip;
+	private String networkCalculation (String ip, int[] mask) {
+        String input = ip;
         /*A "\" é um caracter especial de Strings e de expressoes regulares, 
             se nao me engano sao mesmo precisas as 4 barras. 
          */
@@ -69,44 +69,19 @@ public class Table {
         /* Novamente o ponto e' um caracter especial para expressoes regulares
             e tem de ser precedido de uma "\" para ser considerado um caracter normal.*/
         String[] ipParse = firstParse[0].split("\\.");
-        int[] decimal = new int[4];//vector que ira' conter os decimais
-        
+		int[] decimal = new int[4];//vector que ira' conter os decimais
+		
         for(int z = 0; z < ipParse.length; z++) { // tambem se pode usar 3 directamente uma vez que um IP tem sempre 4 octetos.
             decimal[z] = Integer.parseInt(ipParse[z]);// tens agora um vector com os 4 octetos em decimal         
 		}
 		
-		switch (type) {
-			case "A":
-				//AND logico, com reutilizacao de variavel
-				decimal[0] = decimal[0] & 255;
-				decimal[1] = decimal[1] & 0;
-				decimal[2] = decimal[2] & 0;
-				decimal[3] = decimal[3] & 0;		
-				break;
-			
-			case "B":
-				//AND logico, com reutilizacao de variavel
-				decimal[0] = decimal[0] & 255;
-				decimal[1] = decimal[1] & 255;
-				decimal[2] = decimal[2] & 0;
-				decimal[3] = decimal[3] & 0;
-				break;
-			
-			default:
-				//AND logico, com reutilizacao de variavel
-				decimal[0] = decimal[0] & 255;
-				decimal[1] = decimal[1] & 255;
-				decimal[2] = decimal[2] & 255;
-				decimal[3] = decimal[3] & 0;
-				break;
-		}
-        
-        /*AND logico, com reutilizacao de variavel
-        decimal[0] = decimal[0] & 255;//hardcoded pelo exemplo que deste
-        decimal[1] = decimal[1] & 0;
-        decimal[2] = decimal[2] & 0;
-		decimal[3] = decimal[3] & 0;//Integer.parseInt(firstParse[1]);// se nao te esueceste na segunda posicao do vector estava a MASK
-		*/
+		//AND logico, com reutilizacao de variavel
+		decimal[0] = decimal[0] & mask[0];
+		decimal[1] = decimal[1] & mask[1];
+		decimal[2] = decimal[2] & mask[2];
+		decimal[3] = decimal[3] & mask[3];		
+		
+    
 		return decimal[0] + "" + decimal[1] + "" + decimal[2] + "" + decimal[3];
 	}
 }
